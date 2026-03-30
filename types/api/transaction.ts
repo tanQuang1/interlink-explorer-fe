@@ -16,7 +16,7 @@ export type TransactionRevertReason = {
 } | DecodedInput;
 
 export type WrappedTransactionFields = 'decoded_input' | 'fee' | 'gas_limit' | 'gas_price' | 'hash' | 'max_fee_per_gas' |
-'max_priority_fee_per_gas' | 'method' | 'nonce' | 'raw_input' | 'to' | 'type' | 'value';
+  'max_priority_fee_per_gas' | 'method' | 'nonce' | 'raw_input' | 'to' | 'type' | 'value';
 
 export interface OpWithdrawal extends OptimisticL2WithdrawalClaimInfo {
   l1_transaction_hash: string;
@@ -181,13 +181,13 @@ export interface TransactionsResponseWatchlist {
 }
 
 export type TransactionType = 'rootstock_remasc' |
-'rootstock_bridge' |
-'token_transfer' |
-'contract_creation' |
-'contract_call' |
-'token_creation' |
-'coin_transfer' |
-'blob_transaction';
+  'rootstock_bridge' |
+  'token_transfer' |
+  'contract_creation' |
+  'contract_call' |
+  'token_creation' |
+  'coin_transfer' |
+  'blob_transaction';
 
 export type TxsResponse = TransactionsResponseValidated | TransactionsResponsePending | BlockTransactionsResponse;
 

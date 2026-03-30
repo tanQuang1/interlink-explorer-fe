@@ -1,3 +1,4 @@
+import { Flex } from '@chakra-ui/react';
 import React from 'react';
 
 import type { TxsSocketType } from './socket/types';
@@ -11,6 +12,7 @@ import useIsMobile from 'lib/hooks/useIsMobile';
 import useLazyRenderedList from 'lib/hooks/useLazyRenderedList';
 import { currencyUnits } from 'lib/units';
 import { TableBody, TableColumnHeader, TableColumnHeaderSortable, TableHeader, TableHeaderSticky, TableRoot, TableRow } from 'toolkit/chakra/table';
+import IconSvg from 'ui/shared/IconSvg';
 import TimeFormatToggle from 'ui/shared/time/TimeFormatToggle';
 
 import type { TxsTranslationQuery } from './noves/useDescribeTxs';
@@ -62,7 +64,7 @@ const TxsTable = ({
 
   const columnNum = [
     showBlockInfo,
-    true,
+    true, // Method
     !config.UI.views.tx.hiddenFields?.value,
     !config.UI.views.tx.hiddenFields?.tx_fee,
   ].filter(Boolean).length;
@@ -73,14 +75,25 @@ const TxsTable = ({
       <TableRoot minWidth={{ base: '1200px', lg: '1000px' }}>
         <TableHeaderComponent top={ stickyHeader ? top : undefined }>
           <TableRow>
-            <TableColumnHeader width="48px"></TableColumnHeader>
+            <TableColumnHeader width="48px">
+              <IconSvg name="info" w={ 4 } h={ 4 } color="text.secondary"/>
+            </TableColumnHeader>
             { chainData && <TableColumnHeader width="32px"></TableColumnHeader> }
-            <TableColumnHeader width="180px">
-              Txn hash
+            <TableColumnHeader width="220px">
+              Transaction Hash
               <TimeFormatToggle/>
             </TableColumnHeader>
-            <TableColumnHeader width="160px">Type</TableColumnHeader>
-            <TableColumnHeader width={ baseWidth }>Method</TableColumnHeader>
+            { /* <TableColumnHeader width="160px">Type</TableColumnHeader> */ }
+            <TableColumnHeader width={ baseWidth }>
+              <Flex alignItems="center" gap={ 1 }>
+                Method
+                <IconSvg name="info" w={ 3 } h={ 3 } color="text.secondary"/>
+              </Flex>
+            </TableColumnHeader>
+            <TableColumnHeader width="100px">Nonce</TableColumnHeader>
+            <TableColumnHeader width="100px">Age</TableColumnHeader>
+            { /* <TableColumnHeader width="140px">Gas Limit</TableColumnHeader>
+            <TableColumnHeader width="180px">Gas Price</TableColumnHeader> */ }
             { showBlockInfo && (
               onSortToggle ? (
                 <TableColumnHeaderSortable
@@ -95,7 +108,8 @@ const TxsTable = ({
                 <TableColumnHeader width={ baseWidth }>Block</TableColumnHeader>
               )
             ) }
-            <TableColumnHeader width={ columnNum <= 2 ? baseWidth : '224px' }>From/To</TableColumnHeader>
+            <TableColumnHeader width="160px">From</TableColumnHeader>
+            <TableColumnHeader width="160px">To</TableColumnHeader>
             { !config.UI.views.tx.hiddenFields?.value && (
               onSortToggle ? (
                 <TableColumnHeaderSortable
@@ -105,10 +119,10 @@ const TxsTable = ({
                   sortValue={ sort }
                   onSortToggle={ onSortToggle }
                 >
-                  { `Value ${ currencyUnits.ether }` }
+                  { `Amount ${ currencyUnits.ether }` }
                 </TableColumnHeaderSortable>
               ) : (
-                <TableColumnHeader width={ baseWidth } isNumeric>Value</TableColumnHeader>
+                <TableColumnHeader width={ baseWidth } isNumeric>Amount</TableColumnHeader>
               )
             ) }
             { !config.UI.views.tx.hiddenFields?.tx_fee && (

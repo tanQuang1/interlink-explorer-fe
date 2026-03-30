@@ -4,7 +4,7 @@ export const recipe = defineRecipe({
   base: {
     display: 'inline-flex',
     alignItems: 'center',
-    borderRadius: 'sm',
+    borderRadius: 'base',
     gap: '1',
     fontWeight: '500',
     width: 'fit-content',
@@ -13,7 +13,7 @@ export const recipe = defineRecipe({
     fontVariantNumeric: 'normal',
     userSelect: 'text',
     _loading: {
-      borderRadius: 'sm',
+      borderRadius: 'base',
     },
   },
   variants: {
@@ -24,6 +24,9 @@ export const recipe = defineRecipe({
       gray: {
         bg: 'badge.gray.bg',
         color: 'badge.gray.fg',
+        borderWidth: '1px',
+        borderStyle: 'solid',
+        borderColor: 'badge.gray.border',
       },
       green: {
         bg: 'badge.green.bg',
@@ -120,15 +123,13 @@ export const recipe = defineRecipe({
       },
       md: {
         textStyle: 'sm',
-        px: '1',
-        py: '0.5',
-        minH: '6',
+        px: '2',
+        py: '1.5',
       },
       lg: {
         textStyle: 'sm',
-        px: '2',
-        py: '1',
-        minH: '7',
+        px: '3',
+        py: '2',
         fontWeight: '600',
       },
     },

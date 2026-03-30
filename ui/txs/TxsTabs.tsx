@@ -47,12 +47,14 @@ const TxsTabs = ({ parentTab, tabsHeight, ...rest }: Props) => {
         (parentTab ? tab === parentTab : true) ||
         !tab ||
         (!chainConfig?.features.dataAvailability.isEnabled && tab === getTabId('blob_txs', parentTab)),
-      placeholderData: generateListStub<'general:txs_validated'>(TX, 50, { next_page_params: {
-        block_number: 9005713,
-        index: 5,
-        items_count: 50,
-        filter: 'validated',
-      } }),
+      placeholderData: generateListStub<'general:txs_validated'>(TX, 50, {
+        next_page_params: {
+          block_number: 9005713,
+          index: 5,
+          items_count: 50,
+          filter: 'validated',
+        },
+      }),
     },
   });
 
@@ -61,11 +63,13 @@ const TxsTabs = ({ parentTab, tabsHeight, ...rest }: Props) => {
     filters: { filter: 'pending' },
     options: {
       enabled: tab === getTabId('pending', parentTab),
-      placeholderData: generateListStub<'general:txs_pending'>(TX, 50, { next_page_params: {
-        inserted_at: '2024-02-05T07:04:47.749818Z',
-        hash: '0x00',
-        filter: 'pending',
-      } }),
+      placeholderData: generateListStub<'general:txs_pending'>(TX, 50, {
+        next_page_params: {
+          inserted_at: '2024-02-05T07:04:47.749818Z',
+          hash: '0x00',
+          filter: 'pending',
+        },
+      }),
     },
   });
 
@@ -74,11 +78,13 @@ const TxsTabs = ({ parentTab, tabsHeight, ...rest }: Props) => {
     filters: { type: 'blob_transaction' },
     options: {
       enabled: chainConfig?.features.dataAvailability.isEnabled && tab === getTabId('blob_txs', parentTab),
-      placeholderData: generateListStub<'general:txs_with_blobs'>(TX, 50, { next_page_params: {
-        block_number: 10602877,
-        index: 8,
-        items_count: 50,
-      } }),
+      placeholderData: generateListStub<'general:txs_with_blobs'>(TX, 50, {
+        next_page_params: {
+          block_number: 10602877,
+          index: 8,
+          items_count: 50,
+        },
+      }),
     },
   });
 
@@ -88,11 +94,13 @@ const TxsTabs = ({ parentTab, tabsHeight, ...rest }: Props) => {
     resourceName: 'general:txs_watchlist',
     options: {
       enabled: isAuth && tab === getTabId('watchlist', parentTab),
-      placeholderData: generateListStub<'general:txs_watchlist'>(TX, 50, { next_page_params: {
-        block_number: 9005713,
-        index: 5,
-        items_count: 50,
-      } }),
+      placeholderData: generateListStub<'general:txs_watchlist'>(TX, 50, {
+        next_page_params: {
+          block_number: 9005713,
+          index: 5,
+          items_count: 50,
+        },
+      }),
     },
   });
 
@@ -107,7 +115,8 @@ const TxsTabs = ({ parentTab, tabsHeight, ...rest }: Props) => {
           query={ txsValidatedQuery }
           socketType="txs_validated"
           top={ tabsHeight }
-        /> },
+        />,
+    },
     {
       id: getTabId('pending', parentTab),
       title: 'Pending',
@@ -182,6 +191,8 @@ const TxsTabs = ({ parentTab, tabsHeight, ...rest }: Props) => {
       isLoading={ isTabsLoading }
       stickyEnabled={ !isMobile }
       rightSlot={ rightSlot }
+      // @ts-expect-error variant pills is defined in theme but missing from generated types
+      variant="pills"
       { ...rest }
     />
   );
