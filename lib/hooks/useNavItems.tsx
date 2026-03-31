@@ -80,12 +80,12 @@ export default function useNavItems(): ReturnType {
     } : null;
 
     const verifiedContracts: NavItem | null =
-     {
-       text: 'Verified contracts',
-       nextRoute: { pathname: '/verified-contracts' as const },
-       icon: 'navigation/verified_contracts',
-       isActive: pathname === '/verified-contracts',
-     };
+    {
+      text: 'Verified contracts',
+      nextRoute: { pathname: '/verified-contracts' as const },
+      icon: 'navigation/verified_contracts',
+      isActive: pathname === '/verified-contracts',
+    };
     const nameLookup = config.features.nameServices.isEnabled ? {
       text: 'Name services lookup',
       nextRoute: { pathname: '/name-services' as const },
@@ -222,9 +222,9 @@ export default function useNavItems(): ReturnType {
         userOps,
         blocks,
         epochs,
-        topAccounts,
+        // topAccounts,
         validators,
-        verifiedContracts,
+        // verifiedContracts,
         nameLookup,
         beaconChainFeature.isEnabled && !beaconChainFeature.withdrawalsOnly && {
           text: 'Deposits',
@@ -311,34 +311,34 @@ export default function useNavItems(): ReturnType {
       };
     })();
 
-    const apiNavItem: NavItem | null = config.features.apiDocs.isEnabled ? {
-      text: 'API',
-      nextRoute: { pathname: '/api-docs' as const },
-      icon: 'navigation/api_docs',
-      isActive: pathname.startsWith('/api-docs'),
-    } : null;
+    // const apiNavItem: NavItem | null = config.features.apiDocs.isEnabled ? {
+    //   text: 'API',
+    //   nextRoute: { pathname: '/api-docs' as const },
+    //   icon: 'navigation/api_docs',
+    //   isActive: pathname.startsWith('/api-docs'),
+    // } : null;
 
-    const otherNavItems: Array<NavItem> | Array<Array<NavItem>> = [
-      config.features.multichain.isEnabled ? {
-        text: 'Verify contract',
-        url: 'https://vera.blockscout.com',
-      } : {
-        text: 'Verify contract',
-        nextRoute: { pathname: '/contract-verification' as const },
-        isActive: pathname.startsWith('/contract-verification'),
-      },
-      config.features.publicTagsSubmission.isEnabled && {
-        text: 'Submit public tag',
-        nextRoute: { pathname: '/public-tags/submit' as const },
-        isActive: pathname.startsWith('/public-tags/submit'),
-      },
-      rollupFeature.isEnabled && rollupFeature.type === 'arbitrum' && {
-        text: 'Txn withdrawals',
-        nextRoute: { pathname: '/txn-withdrawals' as const },
-        isActive: pathname.startsWith('/txn-withdrawals'),
-      },
-      ...config.UI.navigation.otherLinks,
-    ].filter(Boolean);
+    // const otherNavItems: Array<NavItem> | Array<Array<NavItem>> = [
+    //   config.features.multichain.isEnabled ? {
+    //     text: 'Verify contract',
+    //     url: 'https://vera.blockscout.com',
+    //   } : {
+    //     text: 'Verify contract',
+    //     nextRoute: { pathname: '/contract-verification' as const },
+    //     isActive: pathname.startsWith('/contract-verification'),
+    //   },
+    //   config.features.publicTagsSubmission.isEnabled && {
+    //     text: 'Submit public tag',
+    //     nextRoute: { pathname: '/public-tags/submit' as const },
+    //     isActive: pathname.startsWith('/public-tags/submit'),
+    //   },
+    //   rollupFeature.isEnabled && rollupFeature.type === 'arbitrum' && {
+    //     text: 'Txn withdrawals',
+    //     nextRoute: { pathname: '/txn-withdrawals' as const },
+    //     isActive: pathname.startsWith('/txn-withdrawals'),
+    //   },
+    //   ...config.UI.navigation.otherLinks,
+    // ].filter(Boolean);
 
     const mainNavItems: ReturnType['mainNavItems'] = [
       {
@@ -360,13 +360,13 @@ export default function useNavItems(): ReturnType {
         isActive: pathname.startsWith('/app') || pathname.startsWith('/essential-dapps'),
       } : null,
       statsNavItem,
-      apiNavItem,
-      {
-        text: 'Other',
-        icon: 'navigation/other',
-        isActive: otherNavItems.flat().some(item => isInternalItem(item) && item.isActive),
-        subItems: otherNavItems,
-      },
+      // apiNavItem,
+      // {
+      //   text: 'Other',
+      //   icon: 'navigation/other',
+      //   isActive: otherNavItems.flat().some(item => isInternalItem(item) && item.isActive),
+      //   subItems: otherNavItems,
+      // },
     ].filter(Boolean);
 
     const accountNavItems: ReturnType['accountNavItems'] = [

@@ -22,9 +22,6 @@ import TxWatchListTags from 'ui/shared/tx/TxWatchListTags';
 import NativeCoinValue from 'ui/shared/value/NativeCoinValue';
 import TxAdditionalInfo from 'ui/txs/TxAdditionalInfo';
 
-import TxTranslationType from './TxTranslationType';
-import TxType from './TxType';
-
 type Props = {
   tx: Transaction;
   showBlockInfo: boolean;
@@ -46,31 +43,11 @@ const TxsTableItem = ({
   isLoading,
   animation,
   chainData,
-  translationIsLoading,
-  translationData,
   isMobile,
 }: Props) => {
   const dataTo = tx.to ? tx.to : tx.created_contract;
 
   const protocolTag = tx.to?.hash !== currentAddress && tx.to?.metadata?.tags?.find(tag => tag.tagType === 'protocol');
-
-  let methodContent = <TxType types={ tx.transaction_types } isLoading={ isLoading }/>;
-
-  if (translationIsLoading || translationData) {
-    methodContent = (
-      <TxTranslationType
-        txTypes={ tx.transaction_types }
-        isLoading={ isLoading || translationIsLoading }
-        type={ translationData?.type }
-      />
-    );
-  } else if (tx.method) {
-    methodContent = (
-      <Badge colorPalette={ tx.method === 'Multicall' ? 'teal' : 'gray' } loading={ isLoading } truncated>
-        <span style={{ textTransform: 'capitalize' }}>{ tx.method }</span>
-      </Badge>
-    );
-  }
 
   return (
     <TableRow key={ tx.hash } animation={ animation }>
@@ -98,7 +75,11 @@ const TxsTableItem = ({
       </TableCell>
       <TableCell whiteSpace="nowrap">
         <VStack alignItems="flex-start">
-          { methodContent }
+          { tx.method && (
+            <Badge colorPalette={ tx.method === 'Multicall' ? 'teal' : 'gray' } loading={ isLoading } truncated>
+              <span style={{ textTransform: 'capitalize' }}>{ tx.method }</span>
+            </Badge>
+          ) }
           { protocolTag && <EntityTag data={ protocolTag } isLoading={ isLoading } maxW="100%" noColors/> }
         </VStack>
       </TableCell>

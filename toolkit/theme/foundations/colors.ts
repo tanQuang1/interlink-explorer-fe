@@ -18,7 +18,7 @@ const DEFAULT_THEME_COLORS = {
       _dark: { value: '{colors.whiteAlpha.800}' },
     },
     secondary: {
-      _light: { value: '{colors.gray.500}' },
+      _light: { value: '#525866' },
       _dark: { value: '{colors.gray.400}' },
     },
   },
