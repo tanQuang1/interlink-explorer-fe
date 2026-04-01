@@ -215,6 +215,31 @@ export const recipe = defineSlotRecipe({
           },
         },
       },
+      pills: {
+        list: {
+          display: 'inline-flex',
+          width: 'auto',
+          minW: 'min-content',
+        },
+        trigger: {
+          borderRadius: 'full',
+          px: '5',
+          py: '2',
+          height: 'auto',
+          fontWeight: '600',
+          color: 'text.secondary',
+          _selected: {
+            bg: { _light: 'black', _dark: 'white' },
+            color: { _light: 'white', _dark: 'black' },
+            _hover: {
+              color: { _light: 'white', _dark: 'black' },
+            },
+          },
+          _hover: {
+            color: 'text.primary',
+          },
+        },
+      },
       unstyled: {},
     },
   },

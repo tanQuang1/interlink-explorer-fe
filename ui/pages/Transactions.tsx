@@ -12,7 +12,7 @@ const TAB_LIST_PROPS = {
   pb: 6,
   marginTop: -5,
 };
-const TABS_HEIGHT = 88;
+const TABS_HEIGHT = 96;
 
 const Transactions = () => {
   const isMobile = useIsMobile();

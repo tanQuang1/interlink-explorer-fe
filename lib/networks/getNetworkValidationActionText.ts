@@ -6,7 +6,7 @@ export default function getNetworkValidationActionText(chainConfig = config) {
       return 'validated';
     }
     case 'mining': {
-      return 'mined';
+      return 'transactions';
     }
     case 'posting': {
       return 'posted';
@@ -18,7 +18,7 @@ export default function getNetworkValidationActionText(chainConfig = config) {
       return 'validated';
     }
     default: {
-      return 'mined';
+      return 'transactions';
     }
   }
 }
