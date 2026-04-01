@@ -1,5 +1,5 @@
 import type { HTMLChakraProps } from '@chakra-ui/react';
-import { Box } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
 
 import type { TabItemRegular } from './types';
@@ -122,7 +122,7 @@ const AdaptiveTabsList = (props: Props) => {
         } : { })
       }
       {
-        ...(typeof listProps === 'function' ? listProps({ isSticky, activeTab }) : listProps)
+        ...(typeof listProps === 'function' ? listProps({ isSticky, activeTab }) : (listProps || {}))
       }
     >
       { leftSlot && (
@@ -136,57 +136,76 @@ const AdaptiveTabsList = (props: Props) => {
         </Box>
       )
       }
-      { tabs.length > 1 && tabsList.map((tab, index) => {
-        const value = getTabValue(tab);
-        const ref = tabsRefs[index];
+      <Flex
+        bgColor={ (variant as string) === 'pills' ? { _light: 'blackAlpha.50', _dark: 'whiteAlpha.100' } : undefined }
+        borderRadius={ (variant as string) === 'pills' ? 'full' : undefined }
+        p={ (variant as string) === 'pills' ? '1' : undefined }
+        flexWrap="nowrap"
+        alignItems="center"
+        flexShrink={ 0 }
+        // hide scrollbar
+        css={{
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+          '-ms-overflow-style': 'none',
+          scrollbarWidth: 'none',
+        }}
+      >
+        { tabs.length > 1 && tabsList.map((tab, index) => {
+          const value = getTabValue(tab);
+          const ref = tabsRefs[index];
 
-        if (tab.id === 'menu') {
+          if (tab.id === 'menu') {
+            return (
+              <AdaptiveTabsMenu
+                key="menu"
+                ref={ ref }
+                tabs={ tabs }
+                tabsCut={ tabsCut ?? 0 }
+                isActive={ activeTabIndex > 0 && tabsCut !== undefined && tabsCut > 0 && activeTabIndex >= tabsCut }
+                { ...getMenuStyles(tabs.length, tabsCut, isLoading) }
+              />
+            );
+          }
+
           return (
-            <AdaptiveTabsMenu
-              key="menu"
+            <TabsTrigger
+              key={ value }
+              value={ value }
               ref={ ref }
-              tabs={ tabs }
-              tabsCut={ tabsCut ?? 0 }
-              isActive={ activeTabIndex > 0 && tabsCut !== undefined && tabsCut > 0 && activeTabIndex >= tabsCut }
-              { ...getMenuStyles(tabs.length, tabsCut, isLoading) }
-            />
-          );
-        }
-
-        return (
-          <TabsTrigger
-            key={ value }
-            value={ value }
-            ref={ ref }
-            scrollSnapAlign="start"
-            flexShrink={ 0 }
-            { ...getItemStyles(index, tabsCut, isLoading) }
-          >
-            { typeof tab.title === 'function' ? tab.title() : tab.title }
-            <TabsCounter count={ tab.count }/>
-          </TabsTrigger>
-        );
-      }) }
-      { tabs.slice(0, isReady ? 0 : 5).map((tab, index) => {
-        const value = `${ getTabValue(tab) }-pre`;
-        return (
-          <TabsTrigger
-            key={ value }
-            value={ value }
-            flexShrink={ 0 }
-            bgColor={
-              activeTabIndex === index && (variant === 'solid' || variant === undefined) ?
-                { _light: 'blackAlpha.50', _dark: 'whiteAlpha.50' } :
-                undefined
-            }
-          >
-            <Skeleton loading>
+              scrollSnapAlign="start"
+              flexShrink={ 0 }
+              { ...getItemStyles(index, tabsCut, isLoading) }
+            >
               { typeof tab.title === 'function' ? tab.title() : tab.title }
               <TabsCounter count={ tab.count }/>
-            </Skeleton>
-          </TabsTrigger>
-        );
-      }) }
+            </TabsTrigger>
+          );
+        }) }
+        { tabs.slice(0, isReady ? 0 : 5).map((tab, index) => {
+          const value = `${ getTabValue(tab) }-pre`;
+          return (
+            <TabsTrigger
+              key={ value }
+              value={ value }
+              flexShrink={ 0 }
+              bgColor={
+                activeTabIndex === index && (variant === 'solid' || (variant as string) === 'pills' || variant === undefined) ?
+                  { _light: 'blackAlpha.50', _dark: 'whiteAlpha.50' } :
+                  undefined
+              }
+            >
+              <Skeleton loading>
+                { typeof tab.title === 'function' ? tab.title() : tab.title }
+                <Skeleton loading ml="2px" flexShrink={ 0 } borderRadius="full">
+                  <TabsCounter count={ tab.count }/>
+                </Skeleton>
+              </Skeleton>
+            </TabsTrigger>
+          );
+        }) }
+      </Flex>
       {
         rightSlot ? (
           <Box

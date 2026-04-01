@@ -7,9 +7,10 @@ import type { ClusterChainConfig } from 'types/multichain';
 
 import config from 'configs/app';
 import { Badge } from 'toolkit/chakra/badge';
+import { Skeleton } from 'toolkit/chakra/skeleton';
 import { TableCell, TableRow } from 'toolkit/chakra/table';
-import AddressFromTo from 'ui/shared/address/AddressFromTo';
 import BlockPendingUpdateHint from 'ui/shared/block/BlockPendingUpdateHint';
+import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import BlockEntity from 'ui/shared/entities/block/BlockEntity';
 import TxEntity from 'ui/shared/entities/tx/TxEntity';
 import EntityTag from 'ui/shared/EntityTags/EntityTag';
@@ -20,9 +21,6 @@ import TxFee from 'ui/shared/tx/TxFee';
 import TxWatchListTags from 'ui/shared/tx/TxWatchListTags';
 import NativeCoinValue from 'ui/shared/value/NativeCoinValue';
 import TxAdditionalInfo from 'ui/txs/TxAdditionalInfo';
-
-import TxTranslationType from './TxTranslationType';
-import TxType from './TxType';
 
 type Props = {
   tx: Transaction;
@@ -45,8 +43,6 @@ const TxsTableItem = ({
   isLoading,
   animation,
   chainData,
-  translationIsLoading,
-  translationData,
   isMobile,
 }: Props) => {
   const dataTo = tx.to ? tx.to : tx.created_contract;
@@ -73,25 +69,6 @@ const TxsTableItem = ({
             maxW="100%"
             truncation="constant"
           />
-          <TimeWithTooltip
-            timestamp={ tx.timestamp }
-            enableIncrement={ enableTimeIncrement }
-            isLoading={ isLoading }
-            color="text.secondary"
-          />
-        </VStack>
-      </TableCell>
-      <TableCell>
-        <VStack alignItems="stretch">
-          { translationIsLoading || translationData ? (
-            <TxTranslationType
-              txTypes={ tx.transaction_types }
-              isLoading={ isLoading || translationIsLoading }
-              type={ translationData?.type }
-            />
-          ) :
-            <TxType types={ tx.transaction_types } isLoading={ isLoading }/>
-          }
           { tx.status !== 'ok' && <TxStatus status={ tx.status } errorText={ tx.status === 'error' ? tx.result : undefined } isLoading={ isLoading }/> }
           <TxWatchListTags tx={ tx } isLoading={ isLoading }/>
         </VStack>
@@ -100,11 +77,24 @@ const TxsTableItem = ({
         <VStack alignItems="flex-start">
           { tx.method && (
             <Badge colorPalette={ tx.method === 'Multicall' ? 'teal' : 'gray' } loading={ isLoading } truncated>
-              <span>{ tx.method }</span>
+              <span style={{ textTransform: 'capitalize' }}>{ tx.method }</span>
             </Badge>
           ) }
           { protocolTag && <EntityTag data={ protocolTag } isLoading={ isLoading } maxW="100%" noColors/> }
         </VStack>
+      </TableCell>
+      <TableCell>
+        <Skeleton loading={ isLoading }>
+          { tx.nonce }
+        </Skeleton>
+      </TableCell>
+      <TableCell>
+        <TimeWithTooltip
+          timestamp={ tx.timestamp }
+          enableIncrement={ enableTimeIncrement }
+          isLoading={ isLoading }
+          color="text.secondary"
+        />
       </TableCell>
       { showBlockInfo && (
         <TableCell>
@@ -123,14 +113,26 @@ const TxsTableItem = ({
         </TableCell>
       ) }
       <TableCell>
-        <AddressFromTo
-          from={ tx.from }
-          to={ dataTo }
-          current={ currentAddress }
+        <AddressEntity
+          address={ tx.from }
           isLoading={ isLoading }
-          mt="2px"
-          mode="compact"
+          noLink={ currentAddress ? tx.from.hash.toLowerCase() === currentAddress.toLowerCase() : false }
+          noCopy={ currentAddress ? tx.from.hash.toLowerCase() === currentAddress.toLowerCase() : false }
+          truncation="constant"
+          noIcon
         />
+      </TableCell>
+      <TableCell>
+        { dataTo && (
+          <AddressEntity
+            address={ dataTo }
+            isLoading={ isLoading }
+            noLink={ currentAddress ? dataTo.hash.toLowerCase() === currentAddress.toLowerCase() : false }
+            noCopy={ currentAddress ? dataTo.hash.toLowerCase() === currentAddress.toLowerCase() : false }
+            truncation="constant"
+            noIcon
+          />
+        ) }
       </TableCell>
       { !config.UI.views.tx.hiddenFields?.value && (
         <TableCell isNumeric>

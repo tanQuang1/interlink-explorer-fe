@@ -41,11 +41,16 @@ source ./deploy/scripts/build_sprite.sh
 echo ""
 
 # generate envs.js file and run the app
+GIT_COMMIT_SHA="$(git rev-parse --short HEAD 2>/dev/null || echo dev)"
+GIT_TAG="$(git describe --tags --abbrev=0 2>/dev/null || echo dev)"
+
 dotenv \
-  -v NEXT_PUBLIC_GIT_COMMIT_SHA=$(git rev-parse --short HEAD) \
-  -v NEXT_PUBLIC_GIT_TAG=$(git describe --tags --abbrev=0) \
-  -v NEXT_PUBLIC_ICON_SPRITE_HASH="${NEXT_PUBLIC_ICON_SPRITE_HASH}" \
-  -e $config_file \
-  -e $secrets_file \
-  -- bash -c './deploy/scripts/make_envs_script.sh && next dev -p $NEXT_PUBLIC_APP_PORT' |
-pino-pretty
+  -v "NEXT_PUBLIC_GIT_COMMIT_SHA=$GIT_COMMIT_SHA" \
+  -v "NEXT_PUBLIC_GIT_TAG=$GIT_TAG" \
+  -v "NEXT_PUBLIC_ICON_SPRITE_HASH=${NEXT_PUBLIC_ICON_SPRITE_HASH}" \
+  -e "$config_file" \
+  -e "$secrets_file" \
+  -- bash -c '
+    ./deploy/scripts/make_envs_script.sh
+    next dev -p "${NEXT_PUBLIC_APP_PORT:-3000}"
+  ' | pino-pretty

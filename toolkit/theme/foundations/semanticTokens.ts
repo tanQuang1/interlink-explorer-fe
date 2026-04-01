@@ -359,8 +359,9 @@ const semanticTokens: ThemingConfig['semanticTokens'] = {
     },
     badge: {
       gray: {
-        bg: { value: { _light: '{colors.blackAlpha.50}', _dark: '{colors.whiteAlpha.100}' } },
-        fg: { value: { _light: '{colors.blackAlpha.800}', _dark: '{colors.whiteAlpha.800}' } },
+        bg: { value: { _light: '{colors.theme.badge.gray.bg._light}', _dark: '{colors.theme.badge.gray.bg._dark}' } },
+        fg: { value: { _light: '{colors.theme.badge.gray.fg._light}', _dark: '{colors.theme.badge.gray.fg._dark}' } },
+        border: { value: { _light: '{colors.theme.badge.gray.border._light}', _dark: '{colors.theme.badge.gray.border._dark}' } },
       },
       green: {
         bg: { value: { _light: '{colors.green.50}', _dark: '{colors.green.800}' } },
@@ -473,8 +474,8 @@ const semanticTokens: ThemingConfig['semanticTokens'] = {
     },
     table: {
       header: {
-        bg: { value: { _light: '{colors.blackAlpha.100}', _dark: '{colors.whiteAlpha.200}' } },
-        fg: { value: { _light: '{colors.blackAlpha.700}', _dark: '{colors.whiteAlpha.700}' } },
+        bg: { value: { _light: '{colors.theme.table.header.bg._light}', _dark: '{colors.theme.table.header.bg._dark}' } },
+        fg: { value: { _light: '{colors.theme.table.header.fg._light}', _dark: '{colors.theme.table.header.fg._dark}' } },
       },
     },
     checkbox: {

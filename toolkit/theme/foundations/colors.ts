@@ -18,22 +18,22 @@ const DEFAULT_THEME_COLORS = {
       _dark: { value: '{colors.whiteAlpha.800}' },
     },
     secondary: {
-      _light: { value: '{colors.gray.500}' },
+      _light: { value: '#525866' },
       _dark: { value: '{colors.gray.400}' },
     },
   },
   hover: {
-    _light: { value: '{colors.blue.400}' },
+    _light: { value: '#7973F3' }, // slightly lighter version of interlink (#6962F1)
     _dark: { value: '{colors.blue.400}' },
   },
   selected: {
     control: {
       text: {
-        _light: { value: '{colors.blue.700}' },
+        _light: { value: '{colors.white}' },
         _dark: { value: '{colors.gray.50}' },
       },
       bg: {
-        _light: { value: '{colors.blue.50}' },
+        _light: { value: '{colors.interlink}' },
         _dark: { value: '{colors.whiteAlpha.50}' },
       },
     },
@@ -66,7 +66,7 @@ const DEFAULT_THEME_COLORS = {
   },
   link: {
     primary: {
-      _light: { value: '{colors.blue.600}' },
+      _light: { value: '{colors.interlink}' },
       _dark: { value: '{colors.blue.300}' },
     },
   },
@@ -117,6 +117,34 @@ const DEFAULT_THEME_COLORS = {
       primary: {
         _light: { value: '{colors.blue.700}' },
         _dark: { value: '{colors.blue.100}' },
+      },
+    },
+  },
+  table: {
+    header: {
+      bg: {
+        _light: { value: '{colors.blackAlpha.100}' },
+        _dark: { value: '{colors.whiteAlpha.200}' },
+      },
+      fg: {
+        _light: { value: '#0E121B' },
+        _dark: { value: '{colors.whiteAlpha.700}' },
+      },
+    },
+  },
+  badge: {
+    gray: {
+      bg: {
+        _light: { value: 'transparent' },
+        _dark: { value: '{colors.whiteAlpha.100}' },
+      },
+      fg: {
+        _light: { value: '#0E121B' },
+        _dark: { value: '{colors.gray.100}' },
+      },
+      border: {
+        _light: { value: '#E1E4EA' },
+        _dark: { value: '{colors.whiteAlpha.300}' },
       },
     },
   },
@@ -272,6 +300,7 @@ const colors = {
   },
 
   // BRAND COLORS
+  interlink: { value: '#6962F1' },
   github: { value: '#171923' },
   telegram: { value: '#2775CA' },
   linkedin: { value: '#1564BA' },
