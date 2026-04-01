@@ -38,7 +38,7 @@ const TimeWithTooltip = ({ timestamp, fallbackText, isLoading, enableIncrement, 
       return <Tooltip content={ content }><span>{ timeAgo }</span></Tooltip>;
     }
 
-    return <Tooltip content={ timeAgo }><span>{ dayjs(timestamp).utc(settings?.isLocalTime).format('lll') }</span></Tooltip>;
+    return <Tooltip content={ timeAgo } ><span >{ dayjs(timestamp).utc(settings?.isLocalTime).format('lll') }</span></Tooltip>;
   })();
 
   return (

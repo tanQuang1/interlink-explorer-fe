@@ -15,3 +15,4 @@ export interface ExternalChain {
 }
 
 export type ExternalChainExtended = ClusterChainConfig | EssentialDappsChainConfig;
+

@@ -20,7 +20,7 @@ const zetachainFeature = config.features.zetachain;
 
 const LatestTxs = () => {
   const isMobile = useIsMobile();
-  const txsCount = isMobile ? 2 : 5;
+  const txsCount = isMobile ? 3 : 6;
   const { data, isPlaceholderData, isError } = useApiQuery('general:homepage_txs', {
     queryOptions: {
       placeholderData: Array(txsCount).fill(TX),

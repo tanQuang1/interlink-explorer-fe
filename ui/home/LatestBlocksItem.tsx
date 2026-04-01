@@ -16,6 +16,8 @@ import BlockEntity from "ui/shared/entities/block/BlockEntity";
 import IconSvg from "ui/shared/IconSvg";
 import TimeWithTooltip from "ui/shared/time/TimeWithTooltip";
 import SimpleValue from "ui/shared/value/SimpleValue";
+import BlockEntityHome from "ui/shared/entities/block/BlockEntityHome";
+import getNetworkValidatorTitleWithName from "lib/networks/getNetworkValidatorTitleWithName";
 
 type Props = {
   block: Block;
@@ -25,113 +27,73 @@ type Props = {
 
 const LatestBlocksItem = ({ block, isLoading, animation }: Props) => {
   const totalReward = getBlockTotalReward(block);
-
+  console.log("block", block);
   return (
     <Box
       animation={animation}
-      py={4}
+      py={3}
       borderBottom="1px solid"
       borderColor="border.divider"
     >
       <Flex align="center" justify="space-between" gap={4} w="100%">
         {/* Left */}
-        <Flex align="center" minW={0} flex="1">
-          {/* <Flex
-            boxSize="56px"
-            borderRadius="full"
-            bg="gray.50"
-            align="center"
-            justify="center"
-            flexShrink={0}
-            mr={4}
-          >
-            <IconSvg name="globe" boxSize={7} color="text.secondary" />
-          </Flex> */}
 
-          <Box minW={0}>
-            <BlockEntity
-              isLoading={isLoading}
-              number={block.height}
-              tailLength={2}
-              // textStyle="xl"
-              fontWeight={600}
-              lineHeight="1.1"
-              fontSize="14px"
-            />
-
-            <Flex align="center" mt={1} color="text.secondary" minW={0} >
-              {block.celo?.l1_era_finalized_epoch_number && (
-                <Tooltip
-                  content={`Finalized epoch #${block.celo.l1_era_finalized_epoch_number}`}
-                >
-                  <Box mr={2} flexShrink={0}>
-                    <IconSvg
-                      name="checkered_flag"
-                      boxSize={4}
-                      p="1px"
-                      isLoading={isLoading}
-                      fontSize="14px"
-                    />
-                  </Box>
-                </Tooltip>
-              )}
-
-              <TimeWithTooltip
-                timestamp={block.timestamp}
-                enableIncrement={!isLoading}
-                timeFormat="relative"
-                isLoading={isLoading}
-                color="text.secondary"
-                textStyle="lg"
-                display="inline-block"
-                fontSize="14px"
-              />
-            </Flex>
-          </Box>
-        </Flex>
+        <BlockEntityHome
+          isLoading={isLoading}
+          number={block.height}
+          timestamp={block.timestamp}
+          l1_era_finalized_epoch_number={
+            block?.celo?.l1_era_finalized_epoch_number
+          }
+          tailLength={2}
+          // textStyle="xl"
+          fontWeight={600}
+          lineHeight="1.1"
+          fontSize="14px"
+        />
 
         {/* Center */}
         <Box flex="1" minW={0} textAlign={{ base: "left", md: "center" }}>
           {!config.features.rollup.isEnabled &&
             !config.UI.views.block.hiddenFields?.miner && (
               <Box minW={0}>
-                <Text
-                  fontSize="14px"
-                  fontWeight={600}
-                  lineHeight="1.1"
-                  mb={1}
-                  truncate
-                >
-                  <Skeleton loading={isLoading} display="inline-block">
-                    {capitalize(getNetworkValidatorTitle())}{" "}
-                  </Skeleton>
-                  <AddressEntity
+                <Skeleton loading={isLoading} display="inline-block">
+                  <Text
+                    fontSize="14px"
+                    fontWeight={500}
+                    truncate
+                    color={"#0E121B"}
+                  >
+                    {capitalize(
+                      getNetworkValidatorTitleWithName(block.miner.name),
+                    )}
+                  </Text>
+                </Skeleton>
+                {/* <AddressEntity
                     address={block.miner}
                     isLoading={isLoading}
                     noIcon
                     noCopy
                     truncation="constant"
-                  />
-                </Text>
+                  /> */}
               </Box>
             )}
 
           <Text color="text.secondary" fontSize="lg" lineHeight="1.2">
             <Skeleton loading={isLoading} display="inline-block">
-              <Text as="span" color="link.hover" fontWeight={600}>
+              <Text
+                as="span"
+                color="#6962F1"
+                fontWeight={400}
+                fontSize={"14px"}
+              >
                 {block.transactions_count} txns
               </Text>
             </Skeleton>
-            <Text as="span"> in </Text>
-            <TimeWithTooltip
-              timestamp={block.timestamp}
-              enableIncrement={!isLoading}
-              timeFormat="relative"
-              isLoading={isLoading}
-              color="text.secondary"
-              display="inline-block"
-              textStyle="lg"
-            />
+            <Text as="span" fontSize={"14px"} color="#99A0AE">
+              {" "}
+              in 2s
+            </Text>
           </Text>
         </Box>
 
@@ -142,19 +104,22 @@ const LatestBlocksItem = ({ block, isLoading, animation }: Props) => {
               <Box
                 px={6}
                 py={3}
-                borderRadius="16px"
+                borderRadius="8px"
                 border="1px solid"
                 borderColor="border.divider"
                 bg="white"
-                minW="146px"
+                // minW="80px"
                 textAlign="center"
+                backgroundColor={"#F5F7FA"}
+                padding={"8px 16px"}
               >
                 <SimpleValue
                   value={totalReward}
                   loading={isLoading}
-                  fontSize="2xl"
+                  fontSize="14px"
                   fontWeight={500}
                   endElement={`${thinsp}${currencyUnits.ether}`}
+                  color={"#0E121B"}
                 />
               </Box>
             </Flex>

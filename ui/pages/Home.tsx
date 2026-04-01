@@ -53,14 +53,44 @@ const Home = () => {
         <Flex
           mt={8}
           direction={{ base: "column", lg: "row" }}
-          columnGap={12}
+          columnGap={5}
           rowGap={6}
         >
-          <Box flex={{ base: "unset", lg: 1 }} minW={0}>
+          <Box
+            flex={{ base: "unset", lg: 1 }}
+            minW={0}
+            borderRadius="4xl"
+            borderWidth="1px"
+            borderStyle="solid"
+            borderColor="#F5F7FA"
+            pt="xl"
+            pr="3xl"
+            pb="3xl"
+            pl="3xl"
+            gap="16px"
+            bg="#FFFFFF"
+            boxShadow="0px 1px 4px 0px #E1E4EACC"
+            padding={"16px 24px 24px 24px"}
+          >
             {leftWidget}
           </Box>
 
-          <Box flex={{ base: "unset", lg: 1 }} minW={0}>
+          <Box
+            flex={{ base: "unset", lg: 1 }}
+            minW={0}
+            borderRadius="4xl"
+            borderWidth="1px"
+            borderStyle="solid"
+            borderColor="#F5F7FA"
+            pt="xl"
+            pr="3xl"
+            pb="3xl"
+            pl="3xl"
+            gap="16px"
+            bg="#FFFFFF"
+            boxShadow="0px 1px 4px 0px #E1E4EACC"
+            padding={"16px 24px 24px 24px"}
+          >
             <Transactions />
           </Box>
         </Flex>
